@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard>
+    <Row>
+        <Key labels = "1|" ratio = "1"/>
+        <Key labels = "2|" ratio = "1"/>
+        <Key labels = "3|" ratio = "1"/>
+        <Key labels = "4|" ratio = "1"/>
+        <Key labels = "5|" ratio = "1"/>
+        <Key labels = "6|" ratio = "1"/>
+        <Key labels = "7|" ratio = "1"/>
+        <Key labels = "8|" ratio = "1"/>
+        <Key labels = "9|" ratio = "1"/>
+        <Key labels = "0|" ratio = "1"/>
+    </Row>
+    <Row>
+        <Key labels = "@|" ratio = "1"/>
+        <Key labels = "#|" ratio = "1"/>
+        <Key labels = "$|" ratio = "1"/>
+        <Key labels = "%|" ratio = "1"/>
+        <Key labels = "&amp;|" ratio = "1"/>
+        <Key labels = "-|" ratio = "1"/>
+        <Key labels = "+|" ratio = "1"/>
+        <Key labels = "(|" ratio = "1"/>
+        <Key labels = ")|" ratio = "1"/>
+    </Row>
+    <Row>
+        <Key labels = "=\&lt;!source:keyboard_one_sym.xml" ratio = "1.5"/>
+        <Key labels = "*|" ratio = "1"/>
+        <Key labels = "&quot;|" ratio = "1"/>
+        <Key labels = "'|" ratio = "1"/>
+        <Key labels = ":|" ratio = "1"/>
+        <Key labels = ";|" ratio = "1"/>
+        <Key labels = "!|" ratio = "1"/>
+        <Key labels = "?|" ratio = "1"/>
+        <Key labels = "⌫!backspace" ratio = "1.5"/>
+    </Row>
+    <Row>
+        <Key labels = "ABC!source:keyboard_one.xml" ratio = "2.25"/>
+        <Key labels = "_" ratio = "1"/>
+        <Key labels = " |" ratio = "3.5"/>
+        <Key labels = "/|" ratio = "1"/>
+        <Key labels = "↵!enter" ratio = "2.25"/>
+    </Row>
+</Keyboard>

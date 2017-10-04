@@ -38,7 +38,7 @@
     </Row>
     <Row>
         <Key labels = "Us!source:keyboard_us.xml" ratio = "1.25"/>
-        <Key labels = "Ru!source:keyboard_ru.xml" ratio = "1.25"/>
+        <Key labels = "Ru!source:keyboard_fi.xml" ratio = "1.25"/>
         <Key labels = " " ratio = "5"/>
         <Key labels = ".|,!?@" ratio = "1"/>
         <Key labels = "↵!enter" ratio = "1.5"/>

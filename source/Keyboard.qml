@@ -1,31 +1,204 @@
 import QtQuick 2.0
+import QtQuick.XmlListModel 2.0
 
-Rectangle {
-    id: root
-    // TODO: inherit keyboardItem instead of agregation
+Item {
+    id: keyboard
 
-    property alias source: keyboardItem.source
-    property alias keyWidth: keyboardItem.keyWidth
-    property alias keyHeight: keyboardItem.keyHeight
-    property alias bounds: keyboardItem.bounds
-    property alias mainFont: keyboardItem.mainFont
-    property alias mainFontColor: keyboardItem.mainFontColor
-    property alias secondaryFont: keyboardItem.secondaryFont
-    property alias secondaryFontColor: keyboardItem.secondaryFontColor
-    property alias keyColor: keyboardItem.keyColor
-    property alias keyPressedColor: keyboardItem.keyPressedColor
-
-    color: "#192430"
     width: 1024
     height: 640
 
-    KeyboardItem {
-        id: keyboardItem
-        anchors.centerIn: parent
-        source: "keyboard_us.xml"
+    property int rows: 4;
+    property int columns: 10;
 
-        onKeyClicked: console.log(key)
-        onSwitchSource: root.source = source
+    property string source: "keyboard_one.xml"
+    property var target;
+
+    property color backgroundColor: "transparent"
+
+    property color keyColor: "#404040"
+    property color keyPressedColor: "grey"
+    property int keyBounds: 2
+
+    property var mainFontFamily: "Roboto"
+    property color mainFontColor: "white"
+    property int mainFontSize: 36
+
+    property var secondaryFontFamily: "Roboto"
+    property color secondaryFontColor: "white"
+    property int secondaryFontSize: 18
+
+    property bool secondaryLabelsVisible: false
+
+    property bool allUpperCase: false
+
+    signal keyClicked(string key)
+    signal switchSource(string source)
+    signal enterClicked()
+
+    Rectangle {
+        id: root
+        anchors.centerIn: parent
+        color: backgroundColor
+
+        property int keyWidth: keyboard.width / columns;
+        property int keyHeight: keyboard.height / rows;
+
+        property int xmlIndex: 1
+
+        Text {
+            id: proxyMainTextItem
+            color: keyboard.mainFontColor
+            font.pointSize: keyboard.mainFontSize
+            font.weight: Font.Light
+            font.family: keyboard.mainFontFamily
+            font.capitalization: keyboard.allUpperCase ? Font.AllUppercase :
+                                                     Font.MixedCase
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Text {
+            id: proxySecondaryTextItem
+            color: keyboard.secondaryFontColor
+            font.pointSize: keyboard.secondaryFontSize
+            font.weight: Font.Light
+            font.family: keyboard.secondaryFontFamily
+            font.capitalization: keyboard.allUpperCase ? Font.AllUppercase :
+                                                     Font.MixedCase
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Column {
+            id: column
+            anchors.centerIn: parent
+
+            Repeater {
+                id: rowRepeater
+
+                model: XmlListModel {
+                    id: keyboardModel
+                    source: keyboard.source
+                    query: "/Keyboard/Row"
+
+                    Behavior on source {
+                        NumberAnimation {
+                            easing.type: Easing.InOutSine
+                            duration: 100
+                        }
+                    }
+                }
+
+                Row {
+                    id: keyRow
+                    property int rowIndex: index
+                    anchors.horizontalCenter: if(parent) parent.horizontalCenter
+
+                    Repeater {
+                        id: keyRepeater
+
+                        model: XmlListModel {
+                            source: keyboard.source
+                            query: "/Keyboard/Row[" + (rowIndex + 1) + "]/Key"
+
+                            XmlRole { name: "labels"; query: "@labels/string()" }
+                            XmlRole { name: "ratio"; query: "@ratio/number()" }
+                            XmlRole { name: "icon"; query: "@icon/string()" }
+                            XmlRole { name: "checkable"; query: "@checkable/string()" }
+                        }
+
+                        Key {
+                            id: key
+                            width: root.keyWidth * ratio
+                            height: root.keyHeight
+                            iconSource: icon
+                            mainFontFamily: proxyMainTextItem.font
+                            mainFontColor: proxyMainTextItem.color
+                            secondaryFontFamily: proxySecondaryTextItem.font
+                            secondaryFontColor: proxySecondaryTextItem.color
+                            secondaryLabelVisible: keyboard.secondaryLabelsVisible
+                            keyColor: keyboard.keyColor
+                            keyPressedColor: keyboard.keyPressedColor
+                            keyBounds: keyboard.keyBounds
+                            isChekable: checkable
+                            isChecked: isChekable &&
+                                       command &&
+                                       command === "shift" &&
+                                       keyboard.allUpperCase
+                            upperCase: keyboard.allUpperCase
+
+                            property var command
+                            property var params: labels
+
+                            onParamsChanged: {
+                                var labelSplit;
+
+                                if(params[0] === '|')
+                                {
+                                    mainLabel = '|'
+                                    labelSplit = params
+                                }
+                                else
+                                {
+                                    labelSplit = params.split(/[|]+/)
+
+                                    if (labelSplit[0] === '!')
+                                        mainLabel = '!';
+                                    else
+                                        mainLabel = params.split(/[!|]+/)[0].toString();
+                                }
+
+                                if (labelSplit[1]) secondaryLabels = labelSplit[1];
+
+                                if (labelSplit[0] === '!')
+                                    command = params.split(/[!|]+/)[1];
+                                else
+                                    command = params.split(/[!]+/)[1];
+                            }
+
+                            onClicked: {
+                                if (command)
+                                {
+                                    var commandList = command.split(":");
+
+                                    switch(commandList[0])
+                                    {
+                                        case "source":
+                                            keyboard.switchSource(commandList[1])
+                                            keyboard.source = commandList[1]
+                                            return;
+                                        case "shift":
+                                            keyboard.allUpperCase = !keyboard.allUpperCase
+                                            return;
+                                        case "backspace":
+                                            keyboard.keyClicked('\b');
+                                            target.text = target.text.substring(0,target.text.length-1)
+                                            return;
+                                        case "enter":
+                                            keyboard.enterClicked()
+                                            return;
+                                        case "tab":
+                                            keyboard.keyClicked('\t');
+                                            target.text = target.text + "   "
+                                            return;
+                                        default: return;
+                                    }
+                                }
+                                if (mainLabel.length === 1)
+                                    root.emitKeyClicked(mainLabel);
+                            }
+                            onAlternatesClicked: root.emitKeyClicked(symbol);
+                        }
+                    }
+                }
+            }
+        }
+
+        function emitKeyClicked(text) {
+            var emitText = keyboard.allUpperCase ? text.toUpperCase() : text;
+            keyClicked( emitText );
+            target.text = target.text + emitText
+        }
     }
 }
 

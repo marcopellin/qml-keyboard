@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Keyboard>
+    <Row>
+        <Key labels = "1" ratio = "1"/>
+        <Key labels = "2" ratio = "1"/>
+        <Key labels = "3" ratio = "1"/>
+        <Key labels = "4" ratio = "1"/>
+        <Key labels = "5" ratio = "1"/>
+        <Key labels = "6" ratio = "1"/>
+        <Key labels = "7" ratio = "1"/>
+        <Key labels = "8" ratio = "1"/>
+        <Key labels = "9" ratio = "1"/>
+        <Key labels = "0" ratio = "1"/>
+	<Key labels = "⌫!backspace" ratio = "1"/>
+    </Row>
+</Keyboard>

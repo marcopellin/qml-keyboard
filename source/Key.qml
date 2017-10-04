@@ -1,24 +1,31 @@
 import QtQuick 2.0
 
 Item {
-    id: root
+    id: key
 
-    property alias mainLabel: mainLabelItem.text
-    property alias secondaryLabels: secondaryLabelsItem.text
-    property alias iconSource: icon.source
+    property string mainLabel: "A"
+    property var secondaryLabels: [];
 
-    property bool isChekable: false
-    property bool isChecked: false
+    property var iconSource;
 
-    property int bounds: 2
+    property color keyColor: "#404040"
+    property color keyPressedColor: "grey"
+    property int keyBounds: 2
 
-    property alias mainFont: mainLabelItem.font
-    property alias secondaryFont: secondaryLabelsItem.font
-    property alias mainFontColor: mainLabelItem.color
-    property alias secondaryFontColor: secondaryLabelsItem.color
+    property var mainFontFamily: "Roboto"
+    property color mainFontColor: "white"
+    property int mainFontSize: 36
 
-    property color keyColor: "gray"
-    property color keyPressedColor: "white"
+    property var secondaryFontFamily: "Roboto"
+    property color secondaryFontColor: "white"
+    property int secondaryFontSize: 18
+
+    property bool secondaryLabelVisible: true
+
+    property bool isChekable;
+    property bool isChecked;
+
+    property bool upperCase;
 
     signal clicked()
     signal alternatesClicked(string symbol)
@@ -26,8 +33,8 @@ Item {
     Rectangle {
         id: backgroundItem
         anchors.fill: parent
-        anchors.margins: root.bounds
-        color: isChecked || mouseArea.pressed ? keyPressedColor : keyColor;
+        anchors.margins: key.keyBounds
+        color: key.isChecked || mouseArea.pressed ? key.keyPressedColor : key.keyColor;
     }
 
     Column
@@ -38,6 +45,15 @@ Item {
             id: secondaryLabelsItem
             smooth: true
             anchors.right: parent.right
+            visible: secondaryLabelVisible
+            text: secondaryLabels.length > 0 ? secondaryLabels : ""
+            color: secondaryFontColor
+
+            font.pointSize: secondaryFontSize
+            font.weight: Font.Light
+            font.family: secondaryFontFamily
+            font.capitalization: upperCase ? Font.AllUppercase :
+                                                     Font.MixedCase
         }
 
         Row {
@@ -53,6 +69,14 @@ Item {
                 id: mainLabelItem
                 smooth: true
                 anchors.verticalCenter: parent.verticalCenter
+                text: mainLabel
+                color: mainFontColor
+
+                font.pointSize: mainFontSize
+                font.weight: Font.Light
+                font.family: mainFontFamily
+                font.capitalization: upperCase ? Font.AllUppercase :
+                                                         Font.MixedCase
             }
         }
     }
@@ -69,7 +93,7 @@ Item {
 
             Rectangle {
                 property bool isSelected: alternatesRow.selectedIndex == index
-                color: isSelected ? mainLabelItem.color : keyPressedColor
+                color: isSelected ? mainLabelItem.color : key.keyPressedColor
                 height: backgroundItem.height
                 width: backgroundItem.width
 
@@ -77,7 +101,7 @@ Item {
                     anchors.centerIn: parent
                     text: secondaryLabels[ index ]
                     font: mainLabelItem.font
-                    color: isSelected ? keyPressedColor : mainLabelItem.color
+                    color: isSelected ? key.keyPressedColor : mainLabelItem.color
                 }
             }
         }
@@ -88,14 +112,14 @@ Item {
         anchors.fill: parent
         onPressAndHold: alternatesRow.visible = true
         onClicked: {
-            if (isChekable) isChecked = !isChecked
-            root.clicked()
+            if (key.isChekable) key.isChecked = !key.isChecked
+            key.clicked()
         }
 
         onReleased: {
             alternatesRow.visible = false
             if (alternatesRow.selectedIndex > -1)
-                root.alternatesClicked(secondaryLabels[alternatesRow.selectedIndex])
+                key.alternatesClicked(secondaryLabels[alternatesRow.selectedIndex])
         }
 
         onMouseXChanged: {
