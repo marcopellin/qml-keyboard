@@ -56,8 +56,8 @@ Item {
         Image {
             id: backgroundImage_center
             anchors.fill: parent
-            anchors.leftMargin: backgroundImage_left.width
-            anchors.rightMargin: backgroundImage_right.width
+            anchors.leftMargin: backgroundImage_left.width - 1
+            anchors.rightMargin: backgroundImage_right.width - 1
             height: parent.height
             fillMode: Image.Stretch
             source: key.keyImageCenter
