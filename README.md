@@ -60,7 +60,8 @@ Choose the one you need or create your own layout, it's really a piece of cake!
 
 ## Screenshots
 ![alt tag](https://raw.githubusercontent.com/marcopellin/qml-keyboard/master/keyboard_two.png)
+##
 ![alt tag](https://raw.githubusercontent.com/marcopellin/qml-keyboard/master/keyboard_one.png)
 
-### Acknowledgments
+## Acknowledgments
 Thanks to Mishka Rogachev for the original work.
