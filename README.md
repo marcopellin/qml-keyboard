@@ -14,7 +14,11 @@ Following are the main properties of this component:
 * backgroundColor
 * keyColor
 * keyPressedColor
+* keyPressedColorOpacity
 * keyBounds
+* keyImageLeft
+* keyImageRight
+* keyImageCenter
 * mainFontFamily
 * mainFontColor
 * mainFontSize
@@ -23,6 +27,9 @@ Following are the main properties of this component:
 * secondaryFontSize
 * secondaryLabelsVisible (default: false)
 * allUpperCase
+
+Note that the button background image is split in three parts: left, right, center.
+That's done in order to obtain the cleanest image as possible while covering the whole button width.
 
 Three signals are emitted by the component:
 
@@ -45,12 +52,14 @@ This element is provided with a given set of xml keyboard layouts:
 Choose the one you need or create your own layout, it's really a piece of cake!
 
 ## Task list
+- [x] Check icon usage
+- [x] Add background image for buttons
 - [ ] Add language choice button (choose between a list of languages)
-- [ ] Check icon usage
 - [ ] Auto resize of key labels
 - [ ] Add languages to the list
 
 ## Screenshots
+![alt tag](https://raw.githubusercontent.com/marcopellin/qml-keyboard/master/keyboard_two.png)
 ![alt tag](https://raw.githubusercontent.com/marcopellin/qml-keyboard/master/keyboard_one.png)
 
 ### Acknowledgments

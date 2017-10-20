@@ -24,7 +24,7 @@
         <Key labels = "l|" ratio = "1"/>
     </Row>
     <Row>
-        <Key labels = "&#8593;!shift" ratio = "1.5" checkable = "true"/>
+        <Key labels = "&#8593;!shift" ratio = "1.5" icon = "icons/shift.svg" checkable = "true"/>
         <Key labels = "z|ž" ratio = "1"/>
         <Key labels = "x|" ratio = "1"/>
         <Key labels = "c|" ratio = "1"/>
@@ -32,13 +32,13 @@
         <Key labels = "b|" ratio = "1"/>
         <Key labels = "n|" ratio = "1"/>
         <Key labels = "m|μ" ratio = "1"/>
-        <Key labels = "⌫!backspace" ratio = "1.5"/>
+        <Key labels = "⌫!backspace" icon = "icons/backspace.svg" ratio = "1.5"/>
     </Row>
     <Row>
         <Key labels = "123!source:keyboard_one_num.xml" ratio = "2.25"/>
         <Key labels = "," ratio = "1"/>
         <Key labels = " |" ratio = "3.5"/>
         <Key labels = ".|" ratio = "1"/>
-        <Key labels = "↵!enter" ratio = "2.25"/>
+        <Key labels = "↵!enter" icon = "icons/enter.svg" ratio = "2.25"/>
     </Row>
 </Keyboard>

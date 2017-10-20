@@ -8,9 +8,14 @@ Item {
 
     property var iconSource;
 
+    property var keyImageLeft: ""
+    property var keyImageRight: ""
+    property var keyImageCenter: ""
+
     property color keyColor: "#404040"
     property color keyPressedColor: "grey"
     property int keyBounds: 2
+    property var keyPressedColorOpacity: 1
 
     property var mainFontFamily: "Roboto"
     property color mainFontColor: "white"
@@ -30,11 +35,41 @@ Item {
     signal clicked()
     signal alternatesClicked(string symbol)
 
+    Item {
+        anchors.fill: parent
+        anchors.margins: key.keyBounds
+        visible: key.keyImageLeft != "" || key.keyImageCenter != "" || key.keyImageRight != "" ? 1 : 0
+        Image {
+            id: backgroundImage_left
+            anchors.left: parent.left
+            height: parent.height
+            fillMode: Image.PreserveAspectFit
+            source: key.keyImageLeft
+        }
+        Image {
+            id: backgroundImage_right
+            anchors.right: parent.right
+            height: parent.height
+            fillMode: Image.PreserveAspectFit
+            source: key.keyImageRight
+        }
+        Image {
+            id: backgroundImage_center
+            anchors.fill: parent
+            anchors.leftMargin: backgroundImage_left.width
+            anchors.rightMargin: backgroundImage_right.width
+            height: parent.height
+            fillMode: Image.Stretch
+            source: key.keyImageCenter
+        }
+    }
+
     Rectangle {
         id: backgroundItem
         anchors.fill: parent
         anchors.margins: key.keyBounds
         color: key.isChecked || mouseArea.pressed ? key.keyPressedColor : key.keyColor;
+        opacity: key.keyPressedColorOpacity
     }
 
     Column
@@ -63,6 +98,9 @@ Item {
                 id: icon
                 smooth: true
                 anchors.verticalCenter: parent.verticalCenter
+                source: iconSource
+                sourceSize.width: key.width * 0.6
+                sourceSize.height: key.height * 0.6
             }
 
             Text {
@@ -71,6 +109,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 text: mainLabel
                 color: mainFontColor
+                visible: iconSource ? false : true
 
                 font.pointSize: mainFontSize
                 font.weight: Font.Light

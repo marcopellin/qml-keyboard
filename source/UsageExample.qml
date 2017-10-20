@@ -2,8 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.1
 
 Item {
-    width: 800
-    height: 600
+    width: 1024
+    height: 640
 
     TextField {
         id: textInput
@@ -23,6 +23,11 @@ Item {
         source: "keyboard_one.xml"
         rows: 4
         columns: 10
+        keyColor: "transparent"
+        keyPressedColorOpacity: 0.2
+        keyImageLeft: "icons/button_bkg_left.png"
+        keyImageRight: "icons/button_bkg_right.png"
+        keyImageCenter: "icons/button_bkg_center.png"
         target: textInput
         onEnterClicked: console.log("Enter!")
     }

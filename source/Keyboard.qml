@@ -13,11 +13,16 @@ Item {
     property string source: "keyboard_one.xml"
     property var target;
 
-    property color backgroundColor: "transparent"
+    property color backgroundColor: "black"
+
+    property var keyImageLeft: ""
+    property var keyImageRight: ""
+    property var keyImageCenter: ""
 
     property color keyColor: "#404040"
     property color keyPressedColor: "grey"
     property int keyBounds: 2
+    property var keyPressedColorOpacity: 1
 
     property var mainFontFamily: "Roboto"
     property color mainFontColor: "white"
@@ -28,6 +33,7 @@ Item {
     property int secondaryFontSize: 18
 
     property bool secondaryLabelsVisible: false
+    property bool doSwitchSource: true
 
     property bool allUpperCase: false
 
@@ -37,7 +43,7 @@ Item {
 
     Rectangle {
         id: root
-        anchors.centerIn: parent
+        anchors.fill: parent
         color: backgroundColor
 
         property int keyWidth: keyboard.width / columns;
@@ -118,7 +124,11 @@ Item {
                             secondaryFontColor: proxySecondaryTextItem.color
                             secondaryLabelVisible: keyboard.secondaryLabelsVisible
                             keyColor: keyboard.keyColor
+                            keyImageLeft: keyboard.keyImageLeft
+                            keyImageRight: keyboard.keyImageRight
+                            keyImageCenter: keyboard.keyImageCenter
                             keyPressedColor: keyboard.keyPressedColor
+                            keyPressedColorOpacity: keyboard.keyPressedColorOpacity
                             keyBounds: keyboard.keyBounds
                             isChekable: checkable
                             isChecked: isChekable &&
@@ -165,7 +175,7 @@ Item {
                                     {
                                         case "source":
                                             keyboard.switchSource(commandList[1])
-                                            keyboard.source = commandList[1]
+                                            if(doSwitchSource) keyboard.source = commandList[1]
                                             return;
                                         case "shift":
                                             keyboard.allUpperCase = !keyboard.allUpperCase
