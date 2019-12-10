@@ -26,11 +26,11 @@ Item {
 
     property var mainFontFamily: "Roboto"
     property color mainFontColor: "white"
-    property int mainFontSize: 36
+    property int mainFontSize: 59
 
     property var secondaryFontFamily: "Roboto"
     property color secondaryFontColor: "white"
-    property int secondaryFontSize: 18
+    property int secondaryFontSize: 30
 
     property bool secondaryLabelsVisible: false
     property bool doSwitchSource: true
@@ -54,7 +54,7 @@ Item {
         Text {
             id: proxyMainTextItem
             color: keyboard.mainFontColor
-            font.pointSize: keyboard.mainFontSize
+            font.pixelSize: keyboard.mainFontSize
             font.weight: Font.Light
             font.family: keyboard.mainFontFamily
             font.capitalization: keyboard.allUpperCase ? Font.AllUppercase :
@@ -66,7 +66,7 @@ Item {
         Text {
             id: proxySecondaryTextItem
             color: keyboard.secondaryFontColor
-            font.pointSize: keyboard.secondaryFontSize
+            font.pixelSize: keyboard.secondaryFontSize
             font.weight: Font.Light
             font.family: keyboard.secondaryFontFamily
             font.capitalization: keyboard.allUpperCase ? Font.AllUppercase :

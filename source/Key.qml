@@ -19,11 +19,11 @@ Item {
 
     property var mainFontFamily: "Roboto"
     property color mainFontColor: "white"
-    property int mainFontSize: 36
+    property int mainFontSize: 59
 
     property var secondaryFontFamily: "Roboto"
     property color secondaryFontColor: "white"
-    property int secondaryFontSize: 18
+    property int secondaryFontSize: 30
 
     property bool secondaryLabelVisible: true
 
@@ -84,7 +84,7 @@ Item {
             text: secondaryLabels.length > 0 ? secondaryLabels : ""
             color: secondaryFontColor
 
-            font.pointSize: secondaryFontSize
+            font.pixelSize: secondaryFontSize
             font.weight: Font.Light
             font.family: secondaryFontFamily
             font.capitalization: upperCase ? Font.AllUppercase :
@@ -111,7 +111,7 @@ Item {
                 color: mainFontColor
                 visible: iconSource ? false : true
 
-                font.pointSize: mainFontSize
+                font.pixelSize: mainFontSize
                 font.weight: Font.Light
                 font.family: mainFontFamily
                 font.capitalization: upperCase ? Font.AllUppercase :
